@@ -1,24 +1,23 @@
 # How to install FreeBSD on OVH VPS
 
-Ovh doesn't support installing **FreeBSD** on their **VPS**, and we need to do it manually.
+OVH does not natively support the installation of **FreeBSD** on their **VPS**. As such, a manual approach is necessary.
 
-There are all actually available versions of the **FreeBSD** system available on the official site:
+You can find all currently available versions of **FreeBSD** on the official site:
 https://download.freebsd.org
 
 ## Prepare VPS on panel side
-To install **FreeBSD** first I propose to install the **Ubuntu** system on your **VPS**
-When you already have **Ubuntu installed** we can go through the next steps.
+To begin the **FreeBSD** installation, first install **Ubuntu** on your **VPS**.
+Once **Ubuntu** is installed, activate the **Rescue mode** for your **VPS**.
+After the **Rescue mode** is active, connect to the server via **KVM** or **SSH**.
 
-Run **Rescue mode** on your **VPS** and when it is ready connect to the server over **KVM or SSH**.
-
-## Choose disc where FreeBSD will be installed
-When you are connected to the server we can mount the disc where FreeBSD should be installed, because you don't have that much space on your disc where the rescue system is running.
-To mount disc first you need to know which to choose so use this command:
+## Identifying the Target Disk for FreeBSD Installation
+Once connected, identify the disk where **FreeBSD** will be installed. Note that the rescue system's disk has limited space.
+To identify the correct disk, use the following command:
 ```
 lsblk
 ```
-Probably you will see one disc where there is that much space you have in your whole VPS and a second disc where is around 3GB of space,
-you need to mount this bigger disc i propose doing it like this:
+Generally, you'll identify two disks: one corresponding to the entirety of your VPS's space and a smaller one (~3GB). Select the larger disk.
+Mount the chosen disk using:
 
 ```
 mkdir /mnt/frebsd
@@ -26,28 +25,27 @@ mount /dev/sda /mnt/freebsd
 ```
 
 ## Download FreeBSD
-To download FreeBSD you need to use these commands:
+Navigate to the mounted directory and download **FreeBSD**:
 ```
 cd /mnt/freebsd
 wget https://download.freebsd.org/ftp/snapshots/VM-IMAGES/13.2-STABLE/amd64/Latest/FreeBSD-13.2-STABLE-amd64.raw.xz
 ```
 > [!IMPORTANT]
-> In my case this is FreeBSD-13.2 but it doesn't matter which version you choose, the only 1 important thing is to choose a raw image of the system, in my case this image is compressed to .xz
+> This guide uses version FreeBSD-13.2. Regardless of the version you opt for, ensure that you download the raw image of the system. Note that in this example, the image is compressed with .xz.
 
-If your FreeBSD raw image is packed like there to ```.xz``` format you need to unpack it like this:
+If the **FreeBSD** raw image is compressed as ```.xz```, decompress it:
 ```
 xz -d FreeBSD-13.2-STABLE-amd64.raw.xz
 ```
 
-## Create a bootable disc from your main disc
+## Creating a Bootable Disk
 > [!WARNING]
-> In this step you will lose all data on the selected disc, make sure you want to do this.
+> This step will erase all data on the selected disk. Ensure you've backed up any critical data before proceeding.
 
-To create bootable disc you need to use ```dd``` command:
+To create bootable disk you need to use ```dd``` command:
 ```
 dd if=FreeBSD-13.2-STABLE-amd64.raw of=/dev/sda bs=1M
 ```
 
 # Booting FreeBSD
-Succes! now you can reset your VPS into default mode and enjoy using FreeBSD :)
-The system should automatically run as FreeBSD if this doesn't happen make sure you follow all the steps correctly!
+Congratulations! You can now restart your VPS into its default mode and begin using **FreeBSD**. If the system does not automatically boot into **FreeBSD**, revisit the steps to ensure all procedures were followed correctly.
