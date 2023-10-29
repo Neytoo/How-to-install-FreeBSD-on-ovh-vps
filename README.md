@@ -47,3 +47,7 @@ To create bootable disc you need to use ```dd``` command:
 ```
 dd if=FreeBSD-13.2-STABLE-amd64.raw of=/dev/sda bs=1M
 ```
+
+# Booting FreeBSD
+Succes! now you can reset your VPS into default mode and enjoy using FreeBSD :)
+The system should automatically run as FreeBSD if this doesn't happen make sure you follow all the steps correctly!
