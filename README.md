@@ -1,4 +1,4 @@
-# How-to-install-FreeBSD-on-ovh
+# How to install FreeBSD on OVH VPS
 
 Ovh doesn't support installing **FreeBSD** on their **VPS**, and we need to do it manually.
 
